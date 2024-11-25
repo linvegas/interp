@@ -1,0 +1,6 @@
+x = 69 42 +
+y = 6 9 *
+z = x y -
+
+print x y -
+print z
