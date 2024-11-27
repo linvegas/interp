@@ -1,11 +1,10 @@
 import io
 import sys
 
-VARS = {}
-
 class Program:
     count = 0
     lines: list[str]
+    vars: dict[str, str] = {}
 
     def __init__(self, lines: list[str]):
         self.lines = lines
@@ -44,7 +43,7 @@ class Program:
                 stack.clear()
                 stack.append(result)
 
-            elif token in VARS: stack.append(VARS[token])
+            elif token in self.vars: stack.append(self.vars[token])
 
             else: print("UNIDENTIFIED TOKEN:", f"'{token}'")
 
@@ -72,7 +71,7 @@ class Program:
             case "end": self.count += 1
             case _:
                 expr = stmt.split(maxsplit=1)[1].split("=")[1].strip()
-                VARS[lhs.strip()] = self.eval_expr(expr)
+                self.vars[lhs.strip()] = self.eval_expr(expr)
                 self.count += 1
 
     def run(self):
