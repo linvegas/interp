@@ -52,11 +52,14 @@ class Program:
     def eval_cond(self, cond: str) -> bool:
         (lhs, operand, rhs) = cond.split()
         match operand:
-            case ">": return self.eval_expr(lhs) > self.eval_expr(rhs)
+            case ">" : return self.eval_expr(lhs) > self.eval_expr(rhs)
+            case ">=": return self.eval_expr(lhs) >= self.eval_expr(rhs)
+            case "<" : return self.eval_expr(lhs) < self.eval_expr(rhs)
+            case "<=": return self.eval_expr(lhs) <= self.eval_expr(rhs)
+            case "==": return self.eval_expr(lhs) == self.eval_expr(rhs)
             case _: print(f"UNIDENTIFIED OPERAND: {operand}")
 
     def eval_stmt(self, stmt: str) -> None:
-        # (lhs, rhs) = stmt.split(maxsplit=1)
         lhs = stmt.split()[0]
 
         match lhs:

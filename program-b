@@ -1,0 +1,6 @@
+x = 2 3 *
+y = 60 2 15 /
+
+if x < y
+    print 1
+end
