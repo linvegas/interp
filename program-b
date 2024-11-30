@@ -3,4 +3,6 @@ y = 60 2 15 /
 
 if x < y
     print 1
+else
+    print 0
 end

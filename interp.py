@@ -5,6 +5,7 @@ class Program:
     count = 0
     lines: list[str]
     vars: dict[str, str] = {}
+    cond = False
 
     def __init__(self, lines: list[str]):
         self.lines = lines
@@ -67,11 +68,20 @@ class Program:
                 print(self.eval_expr(stmt.split(maxsplit=1)[1].strip()))
                 self.count += 1
             case "if":
-                if self.eval_cond(stmt.split(maxsplit=1)[1].strip()): self.count += 1
-                else:
-                    while self.lines[self.count].split()[0] != "end": self.count += 1
+                if self.eval_cond(stmt.split(maxsplit=1)[1].strip()):
+                    self.cond = True
                     self.count += 1
-            case "end": self.count += 1
+                else:
+                    while self.lines[self.count].split()[0] != "end":
+                        if self.lines[self.count].split()[0] == "else": break
+                        self.count += 1
+            case "else":
+                if self.cond:
+                    while self.lines[self.count].split()[0] != "end": self.count += 1
+                else: self.count += 1
+            case "end":
+                self.cond = False
+                self.count += 1
             case _:
                 expr = stmt.split(maxsplit=1)[1].split("=")[1].strip()
                 self.vars[lhs.strip()] = self.eval_expr(expr)
